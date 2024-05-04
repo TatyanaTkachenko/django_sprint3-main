@@ -22,7 +22,7 @@ class PublishedCreatedModel(models.Model):
 class Location(PublishedCreatedModel):
     name = models.CharField(
         max_length=256,
-        verbose_name='Местоположение'
+        verbose_name='Название места'
     )
 
     class Meta:
@@ -33,9 +33,9 @@ class Location(PublishedCreatedModel):
 class Category(PublishedCreatedModel):
     title = models.CharField(
         max_length=256,
-        verbose_name='Категория'
+        verbose_name='Заголовок'
     )
-    description = models.TextField(verbose_name='Категория')
+    description = models.TextField(verbose_name='Описание')
     slug = models.SlugField(
         unique=True,
         verbose_name='Идентификатор',
@@ -47,7 +47,7 @@ class Category(PublishedCreatedModel):
         verbose_name_plural = 'Категории'
 
 
-class Post(models.Model):
+class Post(PublishedCreatedModel):
     title = models.CharField(
         max_length=256,
         verbose_name='Заголовок'
