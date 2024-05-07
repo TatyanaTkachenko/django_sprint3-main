@@ -2,7 +2,7 @@ from django.db.models.functions import Now
 from django.shortcuts import get_object_or_404, render
 
 from . import constants
-from .models import Category, Post, User
+from .models import Category, Post
 
 
 def get_posts(post_objects, username=None):
@@ -13,8 +13,8 @@ def get_posts(post_objects, username=None):
     )
     if username is not None:
         posts_by_username = post_objects.filter(
-        author=username
-    )
+            author=username
+        )
         return all_published_post | posts_by_username
     return all_published_post
 
@@ -24,7 +24,9 @@ def index(request):
     if request.user.is_anonymous:
         username = None
     template = 'blog/index.html'
-    post_list = get_posts(Post.objects, username=username).all()[:constants.POSTS_LIMIT]
+    post_list = get_posts(
+        Post.objects, username=username
+    ).all()[:constants.POSTS_LIMIT]
     context = {'post_list': post_list}
     return render(request, template, context)
 
@@ -34,7 +36,8 @@ def post_detail(request, post_id):
     if request.user.is_anonymous:
         username = None
     template = 'blog/detail.html'
-    posts = get_object_or_404(get_posts(Post.objects, username=username).all(), id=post_id)
+    posts = get_object_or_404(
+        get_posts(Post.objects, username=username).all(), id=post_id)
     context = {'post': posts}
     return render(request, template, context)
 
